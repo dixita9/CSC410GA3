@@ -10,6 +10,7 @@ genome::genome(){
 //constructor
   genes = NULL;
   nGenes = 0;
+  mRate = 0;
 }
   
 genome::~genome(){
@@ -142,6 +143,116 @@ return genes[index].green;
 } else {return -1;}
 
 }
+
+
+
+
+//GA2
+
+
+void set_mRate ( double val) {
+  if( 0 < val < 1){
+  
+   mRate = val
+}
+}
+
+double get_mRate(){
+
+return mRate
+
+}
+
+void mutate_gene (int index){
+
+for (int i = 0; i < nGenes ; ++i) {
+
+if ((double) rand() % RAND_MAX < mRate){
+genes[i].red = rand() % 256;
+
+}
+
+if ((double) rand() % RAND_MAX < mRate){
+genes[i].blue = rand() % 256;
+
+}
+
+if ((double) rand() % RAND_MAX < mRate){
+genes[i].green = rand() % 256;
+
+}
+
+}
+
+void mutate(){
+for (int i = 0; i < nGenes ; ++i) {
+mutate_gene(i);
+
+}
+
+}
+
+
+double calculate_gene-fitness(int index, Pixel targetPixel){
+
+
+
+double average = (fabs((taregtPixel.red - gene[index].red) + fabs(taregtPixel.green - gene[index].green ) + fabs(taregtPixel.blue - gene[index].blue)) / 3)/ 256.0
+
+return average;
+
+}
+
+double calculate_overall_fitness(Pixel* target, int nPixel) {
+
+if (nGenes = nPixel){
+
+double totalError = 0.0;
+
+    for (int i = 0; i < nPixels; ++i) {
+
+        double errorRed = fabs(target[i].red - produced[i].red);
+        double errorGreen = fabs(target[i].green - produced[i].green);
+        double errorBlue = fabs(target[i].blue - produced[i].blue);
+
+        
+        totalError += errorRed * errorRed + errorGreen * errorGreen + errorBlue * errorBlue;
+    }
+
+   
+    double averageError = totalError / nPixels;
+
+    return averageError;
+
+}
+
+}
+
+void set_pixel(int index, Pixel newPixel){
+
+ (0 <= index && index <= nGenes - 1 &&
+    0 <= newPixel.red && newPixel.red <= 255 &&
+    0 <= newPixel.green && newPixel.green <= 255 &&
+    0 <= newPixel.blue && newPixel.blue <= 255){
+    
+  
+  
+  genes[index] = newPixel;
+    
+}
+ 
+
+}
+
+
+Pixel get_pixel (int index){
+
+return genes[index];
+}
+
+
+
+
 
 
 
