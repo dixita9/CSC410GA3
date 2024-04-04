@@ -149,6 +149,7 @@ return genes[index].green;
 //GA2
 
 
+// Set mutation rate.
 void genome::set_mRate ( double val) {
   if( 0 < val < 1){
   
@@ -156,12 +157,14 @@ void genome::set_mRate ( double val) {
 }
 }
 
+// Get mutation rate.
 double genome::get_mRate(){
 
 return mRate;
 
 }
 
+// Mutate a gene at a given index.
 void genome::mutate_gene (int index){
 
 for (int i = 0; i < nGenes ; ++i) {
@@ -184,6 +187,7 @@ genes[i].green = rand() / 256;
 }
 }
 
+// Mutate all genes.
 void genome::mutate(){
 for (int i = 0; i < nGenes ; ++i) {
 mutate_gene(i);
@@ -192,9 +196,10 @@ mutate_gene(i);
 
 }
 
+// Calculate fitness of a gene compared to a target pixel.
 
 double genome::calculate_gene_fitness(int index, Pixel targetPixel){
-
+// Calculate average absolute difference between target and gene's RGB values.
 
 
 double average = (fabs((targetPixel.red - genes[index].red) + fabs(targetPixel.green - genes[index].green ) + fabs(targetPixel.blue - genes[index].blue)) / 3)/ 256.0;
@@ -202,12 +207,13 @@ double average = (fabs((targetPixel.red - genes[index].red) + fabs(targetPixel.g
 return average;
 }
 
+// Calculate fitness of a gene compared to an array of target pixel.
 double genome::calculate_overall_fitness(Pixel* target, int nPixel) {
 
-if (nGenes = nPixel){
+if (nGenes = nPixel){  // Check if number of genes matches number of target pixels.
 
 double totalError = 0.0;
-
+// Calculate error for each pixel and accumulate.
     for (int i = 0; i < nPixel; ++i) {
 
         double errorRed = fabs(target[i].red - genes[i].red);
@@ -221,12 +227,12 @@ double totalError = 0.0;
    
     double averageError = totalError / nPixel;
 
-    return averageError;
+    return averageError; // Return the calculated overall fitness.
 
 }
 
 }
-
+// Set a pixel at a particular index.
 void genome::set_pixel(int index, Pixel newPixel){
 
  if (0 <= index && index <= nGenes - 1 &&
@@ -236,17 +242,17 @@ void genome::set_pixel(int index, Pixel newPixel){
     
   
   
-  genes[index] = newPixel;
+  genes[index] = newPixel; // Set the pixel at the specified index.
     
 }
  
 
 }
 
-
+// Get a pixel at a particular index.
 Pixel genome::get_pixel (int index){
 
-return genes[index];
+return genes[index]; // Return the pixel at the specified index.
 }
 
 
