@@ -28,11 +28,11 @@ public:
     double calculate_gene_fitness(int index, Pixel targetPixel);
     double calculate_overall_fitness(Pixel* target, int nPixel);
     void set_pixel(int index, Pixel newPixel);
-    Pixel get_Pixel(int index);
->>>>>>> dc7eb94674d9a35c726d1ee559103cc253ce44d3
+    Pixel get_pixel(int index);
+
 
 private:
     Pixel* genes; // Pointer to an array of Pixel structs
-    int nGenes; / Number of genes in the genome
-    double mRate
+    int nGenes; // Number of genes in the genome
+    double mRate;
 };

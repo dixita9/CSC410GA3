@@ -3,7 +3,7 @@
 #include <iostream>   // this is so that the << redirect operators and 
                       // cout works
 using namespace std;  // we use this so that we do not have to have 
-                      // "std:" before cout and endl
+#include <math.h>                    // "std:" before cout and endl
 
 
 genome::genome(){
@@ -59,11 +59,10 @@ void genome::print() {
 // Print genes array
    for (int i = 0; i < nGenes ; ++i) {
    
-   cout << i + 1 << ". Red: " << genes[i].red << endl;
-    cout << i + 1 << ". Green: " << genes[i].green << endl;
-     cout << i + 1 << ". Blue: " << genes[i].blue << endl;
+     cout << "[" << genes[i].red << ", " << genes[i].green << ", " << genes[i].blue << "]";
+     
    
-   }
+   } cout << endl;
 }
 
 // Randomly assign values to genes array
@@ -150,41 +149,42 @@ return genes[index].green;
 //GA2
 
 
-void set_mRate ( double val) {
+void genome::set_mRate ( double val) {
   if( 0 < val < 1){
   
-   mRate = val
+   mRate = val;
 }
 }
 
-double get_mRate(){
+double genome::get_mRate(){
 
-return mRate
+return mRate;
 
 }
 
-void mutate_gene (int index){
+void genome::mutate_gene (int index){
 
 for (int i = 0; i < nGenes ; ++i) {
 
-if ((double) rand() % RAND_MAX < mRate){
-genes[i].red = rand() % 256;
+if ((double) rand() / RAND_MAX < mRate){
+genes[i].red = rand() / 256;
 
 }
 
-if ((double) rand() % RAND_MAX < mRate){
-genes[i].blue = rand() % 256;
+if ((double) rand() / RAND_MAX < mRate){
+genes[i].blue = rand() / 256;
 
 }
 
-if ((double) rand() % RAND_MAX < mRate){
-genes[i].green = rand() % 256;
+if ((double) rand() / RAND_MAX < mRate){
+genes[i].green = rand() / 256;
 
 }
 
 }
+}
 
-void mutate(){
+void genome::mutate(){
 for (int i = 0; i < nGenes ; ++i) {
 mutate_gene(i);
 
@@ -193,34 +193,33 @@ mutate_gene(i);
 }
 
 
-double calculate_gene-fitness(int index, Pixel targetPixel){
+double genome::calculate_gene_fitness(int index, Pixel targetPixel){
 
 
 
-double average = (fabs((taregtPixel.red - gene[index].red) + fabs(taregtPixel.green - gene[index].green ) + fabs(taregtPixel.blue - gene[index].blue)) / 3)/ 256.0
+double average = (fabs((targetPixel.red - genes[index].red) + fabs(targetPixel.green - genes[index].green ) + fabs(targetPixel.blue - genes[index].blue)) / 3)/ 256.0;
 
 return average;
-
 }
 
-double calculate_overall_fitness(Pixel* target, int nPixel) {
+double genome::calculate_overall_fitness(Pixel* target, int nPixel) {
 
 if (nGenes = nPixel){
 
 double totalError = 0.0;
 
-    for (int i = 0; i < nPixels; ++i) {
+    for (int i = 0; i < nPixel; ++i) {
 
-        double errorRed = fabs(target[i].red - produced[i].red);
-        double errorGreen = fabs(target[i].green - produced[i].green);
-        double errorBlue = fabs(target[i].blue - produced[i].blue);
+        double errorRed = fabs(target[i].red - genes[i].red);
+        double errorGreen = fabs(target[i].green - genes[i].green);
+        double errorBlue = fabs(target[i].blue - genes[i].blue);
 
         
         totalError += errorRed * errorRed + errorGreen * errorGreen + errorBlue * errorBlue;
     }
 
    
-    double averageError = totalError / nPixels;
+    double averageError = totalError / nPixel;
 
     return averageError;
 
@@ -228,9 +227,9 @@ double totalError = 0.0;
 
 }
 
-void set_pixel(int index, Pixel newPixel){
+void genome::set_pixel(int index, Pixel newPixel){
 
- (0 <= index && index <= nGenes - 1 &&
+ if (0 <= index && index <= nGenes - 1 &&
     0 <= newPixel.red && newPixel.red <= 255 &&
     0 <= newPixel.green && newPixel.green <= 255 &&
     0 <= newPixel.blue && newPixel.blue <= 255){
@@ -245,7 +244,7 @@ void set_pixel(int index, Pixel newPixel){
 }
 
 
-Pixel get_pixel (int index){
+Pixel genome::get_pixel (int index){
 
 return genes[index];
 }
