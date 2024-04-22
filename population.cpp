@@ -113,7 +113,73 @@ if (useRoulette == 1) {
         select_parents();
     }
     
-  int offspring = 1;
+    int offspring1 = 0
+    int offspring2 = 1
+    
+    
+    ind_len = len(individuals)
+    
+  while (offspring1 <= ind_len - 1 && offspring2 <= ind_len - 1){
+  
+   while (offspring1 == parentindex1 || offspring1 == parentindex2){
+   
+     offspring1++
+   
+   }
+   
+   
+   offspring2 = offspring1 + 1
+   
+   while (offspring2 == parentindex1 || offspring2 == parentindex2){
+   
+     offspring2++
+   
+   }
+   
+   
+   
+   
+    
+    int crossoverPoints = get_nCrossover();
+    for (int point = 0; point < crossoverPoints; ++point) {
+  // Randomly select crossover points
+      int crossoverPoint1 = rand() % nGenes;
+      int crossoverPoint2 = rand() % nGenes;
+      
+      if (crossoverPoint1 > crossoverPoint2) {
+      swap(crossoverPoint1, crossoverPoint2);
+}
+
+    for (int i = 0, i < crossover1; i++) {
+    
+    individuals[offspring1].genome[i] = individuals[parentindex1].genome[i];
+    individuals[offspring2].genome[i] = individuals[parentindex2].genome[i];
+    
+    }
+    
+    for (int i = 0, crossover1 <= i <= crossover2; i++) {
+    
+    individuals[offspring1].genome[i] = individuals[parentindex2].genome[i];
+    individuals[offspring2].genome[i] = individuals[parentindex1].genome[i];
+    
+    }
+    
+    for (int i = 0, crossover2 < i; i++) {
+    
+    individuals[offspring1].genome[i] = individuals[parentindex1].genome[i];
+    individuals[offspring2].genome[i] = individuals[parentindex2].genome[i];
+    
+    }
+  
+  
+  
+  
+  
+  
+    
+ }   
+    
+  /**int offspring = 1;
   
 
     // Perform crossover if offspring <= 2, else mutate other individuals
@@ -156,7 +222,7 @@ if (useRoulette == 1) {
     }
     
     
-}
+}**/
 
 
 double calculate_overall_fitness(Pixel* mytarget, int nPixels) {
