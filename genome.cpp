@@ -73,6 +73,7 @@ srand(time(NULL));
 // Generate random number between 0 and 255
 
 for (int i = 0; i < nGenes ; ++i) {
+
 genes[i].red = rand() % 256;
 genes[i].green = rand() % 256;
 genes[i].blue = rand() % 256;
