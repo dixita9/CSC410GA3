@@ -13,7 +13,8 @@ population::population(){
  nIndividuals = 0;
  nCrossover = 1; 
  targetGenome = nullptr;
-  
+ parentIndex1 = -1; 
+ parentIndex2 = -1;
   
 }
   
@@ -170,13 +171,17 @@ if (useRoulette == 1) {
     individuals[offspring2].genome[i] = individuals[parentindex2].genome[i];
     
     }
-  
-  
-  
-  
-  
-  
     
+    offspring1++
+    offspring2++
+    
+     for (int i = 0; i < nIndividuals; ++i) {
+            if (i != parentIndex1 && i != parentIndex2) {
+                individuals[i].set_mRrate(mutationRate);
+                individuals[i].mutate();
+            }
+  
+  
  }   
     
   /**int offspring = 1;
@@ -211,15 +216,7 @@ if (useRoulette == 1) {
         }
     }
 
-    //Delete current population
-    delete[] individuals;
-    individuals = nullptr;
 
-    // Create new population
-    individuals = new genome[nIndividuals];
-    for (int i = 0; i < nIndividuals; ++i) {
-        individuals[i].allocate(nGenes);
-    }
     
     
 }**/
@@ -238,7 +235,16 @@ double calculate_overall_fitness(Pixel* mytarget, int nPixels) {
 
 void print_parents(){
 
+if (parentIndex1 == -1 || parentIndex2 == -1) {
+        cout << "No parents have been set yet." << endl; 
+        return;
+    }
 
+    cout << "Parent 1:" << endl;
+    individuals[parentIndex1].print();
+
+    cout << "Parent 2:" << endl;
+    individuals[parentIndex2].print();
 
 
 }
@@ -246,6 +252,17 @@ void print_parents(){
 
 
 void print_population(){
+
+cout << "Number of Crossover Points: " << nCrossover << endl;
+    cout << "Mutation Rate: " << mRate << endl;
+
+    cout << "Population:" << endl;
+    for (int i = 0; i < nIndividuals; ++i) {
+        cout << "Individual " << i << ":" << endl;
+        individuals[i].print(); 
+        cout << endl;
+    }
+
 
 
 }

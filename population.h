@@ -35,9 +35,13 @@ int nCrossover
 
 double mutationRate;
 
-Pixel* mytarget
+Pixel* mytarget;
 
-int nPixels
+int nPixels;
+
+int parentIndex1;
+
+int parentIndex2;
 
 
 
