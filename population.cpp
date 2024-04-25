@@ -118,7 +118,11 @@ if (useRoulette == 1) {
     int offspring2 = 1
     
     
-    ind_len = len(individuals)
+    ind_len = nIndividuals;
+    
+    //create an array with booleans with the same number of indices as individuals. 
+    //in the while loop, check if the indices at offspring is set to false. 
+    //once we have increased it, set it to false outside the while loop
     
   while (offspring1 <= ind_len - 1 && offspring2 <= ind_len - 1){
   
@@ -127,6 +131,8 @@ if (useRoulette == 1) {
      offspring1++
    
    }
+   
+   //
    
    
    offspring2 = offspring1 + 1
@@ -138,9 +144,6 @@ if (useRoulette == 1) {
    }
    
    
-   
-   
-    
     int crossoverPoints = get_nCrossover();
     for (int point = 0; point < crossoverPoints; ++point) {
   // Randomly select crossover points
@@ -172,8 +175,8 @@ if (useRoulette == 1) {
     
     }
     
-    offspring1++
-    offspring2++
+
+    }
     
      for (int i = 0; i < nIndividuals; ++i) {
             if (i != parentIndex1 && i != parentIndex2) {
@@ -270,8 +273,43 @@ cout << "Number of Crossover Points: " << nCrossover << endl;
 
 void find_roulette_top_individuals(){
 
+    double totalFitness = 0.0;
+    for (int i = 0; i < nIndividuals; ++i) {
+        totalFitness += individuals[i].calculate_overall_fitness();
+    }
+    
+    
+    vector<double> fitness_wheel;
+    double cumulativeProbability = 0.0;
+    for (int i = 0; i < nIndividuals; ++i) {
+        double relativeFitness = individuals[i].calculate_overall_fitness() / totalFitness;
+        cumulativeProbability += relativeFitness;
+        fitness_wheel.push_back(cumulativeProbability);
+    }
+    
+    double randNum1 = (double)rand() / RAND_MAX; 
+    double randNum2 = (double)rand() / RAND_MAX;
 
+    int selectedIndex1 = -1;
+    int selectedIndex2 = -1;
 
+    
+    for (int i = 0; i < nIndividuals; ++i) {
+        if (randNum1 <= cumulativeProbabilities[i]) {
+            selectedIndex1 = i;
+            break;
+        }
+    }
+
+    for (int i = 0; i < nIndividuals; ++i) {
+        if (randNum2 <= cumulativeProbabilities[i] && i != selectedIndex1) {
+            selectedIndex2 = i;
+            break;
+        }
+    }
+
+    parentIndex1 = selectedIndex1;
+    parentIndex2 = selectedIndex2;
 
 }
 
