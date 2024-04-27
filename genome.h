@@ -1,3 +1,6 @@
+#pragma once
+#include <ostream>
+
 // Define a struct to represent a pixel with red, blue, and green color components
 struct Pixel {
     int red;
@@ -28,6 +31,9 @@ public:
     double calculate_overall_fitness(Pixel* target, int nPixel); // Calculate overall fitness of the genome compared to an array of target pixels
     void set_pixel(int index, Pixel newPixel); // Set a pixel at a particular index
     Pixel get_pixel(int index); // Get a pixel at a particular index
+    int getNGenes() const;
+    const Pixel* getGenes() const;
+    friend std::ostream& operator<<(std::ostream& os, const genome& g); //overload operator to print 
 
 private:
     Pixel* genes; // Pointer to an array of Pixel structs representing genes

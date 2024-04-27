@@ -1,4 +1,9 @@
+#pragma once
+#include <iostream>   // this is so that the << redirect operators and 
+#include "genome.h"              // cout works
 
+using namespace std;  // we use this so that we do not have to have 
+#include <math.h> 
 
 class population{
 public:
@@ -19,23 +24,33 @@ void set_nCrossover(int nCrossover);
 
 int get_nCrossover();
 
-void set_mutation(double mRate)
+void set_mutation(double mRate);
 
+void generate_new_population(int useRoulette);
+
+double calculate_overall_fitness();
+
+void print_parents();
+
+void print_population();
+
+void find_roulette_top_individuals();
+
+
+friend std::ostream& operator<<(std::ostream& os, const population& pop);
 
 
 
 
 private:
 
-int nIndividuals
+int nIndividuals;
 
-genome* individuals
+genome* individuals;
 
-int nCrossover
+int nCrossover;
 
 double mutationRate;
-
-Pixel* mytarget;
 
 int nPixels;
 
@@ -43,16 +58,10 @@ int parentIndex1;
 
 int parentIndex2;
 
+Pixel* targetGenome;
 
 
 
 
 
-
-
-
-
-
-
-
-}
+};

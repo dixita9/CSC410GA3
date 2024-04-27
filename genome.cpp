@@ -23,7 +23,6 @@ deallocate();
 // Allocate memory for genes array
 void genome::allocate(int numgenes){
 if (genes != NULL){
-
 deallocate();
 
 }
@@ -45,6 +44,8 @@ genes[i].blue = 0;
 // Deallocate memory for genes array
 
 void genome::deallocate(){
+
+
 if (genes == NULL){
 return;
 }
@@ -68,7 +69,7 @@ void genome::print() {
 // Randomly assign values to genes array
 void genome::randomize(){
 
-srand(time(NULL));
+
 
 // Generate random number between 0 and 255
 
@@ -211,26 +212,30 @@ return average;
 // Calculate fitness of a gene compared to an array of target pixel.
 double genome::calculate_overall_fitness(Pixel* target, int nPixel) {
 
-if (nGenes = nPixel){  // Check if number of genes matches number of target pixels.
+ // Check if number of genes matches number of target pixels.
+
+if (nGenes != nPixel || nPixel == 0) {
+        // Throw an exception or terminate the program if the number of genes doesn't match the number of target pixels,
+        // or if the number of pixels is zero.
+        cout << "nGenes: " << nGenes << endl << "nPixel: " << nPixel << endl;
+        throw std::invalid_argument("Error: Number of genes does not match number of target pixels or nPixel is zero!");
+    }
 
 double totalError = 0.0;
 // Calculate error for each pixel and accumulate.
     for (int i = 0; i < nPixel; ++i) {
-
-        double errorRed = fabs(target[i].red - genes[i].red);
-        double errorGreen = fabs(target[i].green - genes[i].green);
-        double errorBlue = fabs(target[i].blue - genes[i].blue);
-
         
-        totalError += errorRed * errorRed + errorGreen * errorGreen + errorBlue * errorBlue;
+        // Accumulate squared errors
+        totalError += this ->calculate_gene_fitness(i, target[i]);
+
     }
 
    
-    double averageError = totalError / nPixel;
+    double averageError = totalError / (double) nPixel;
 
     return averageError; // Return the calculated overall fitness.
 
-}
+
 
 }
 // Set a pixel at a particular index.
@@ -246,7 +251,6 @@ void genome::set_pixel(int index, Pixel newPixel){
   genes[index] = newPixel; // Set the pixel at the specified index.
     
 }
- 
 
 }
 
@@ -255,6 +259,26 @@ Pixel genome::get_pixel (int index){
 
 return genes[index]; // Return the pixel at the specified index.
 }
+
+int genome::getNGenes() const {
+    return nGenes;
+}
+
+const Pixel* genome::getGenes() const {
+    return genes;
+}
+
+
+std::ostream& operator<<(std::ostream& os, const genome& g) {
+    os << "Genes: ";
+    for (int i = 0; i < g.nGenes; ++i) {
+        os << "[" << g.genes[i].red << ", " << g.genes[i].green << ", " << g.genes[i].blue << "] ";
+    }
+    return os;
+}
+
+
+
 
 
 
